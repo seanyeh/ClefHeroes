@@ -23,3 +23,8 @@ musicians of ALL levels.
 For beginners, try out the Treble Clef on Slow, and for the more advanced, try
 to master all seven musical clefs! Treble, Bass, Alto, Tenor, Soprano,
 Mezzo-Soprano, and Baritone
+
+
+## License
+
+Clef Heroes is licensed under the MIT License
