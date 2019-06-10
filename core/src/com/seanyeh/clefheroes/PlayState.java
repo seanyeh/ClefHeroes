@@ -52,7 +52,7 @@ public class PlayState extends AbstractState implements InputProcessor {
     final int[] CHALLENGE_LIMITS = new int[]{20, 30, 40, 50};
     final Clef[] CLEFS = new Clef[]{Clef.TREBLE(), Clef.BASS(), Clef.ALTO(),
             Clef.TENOR(), Clef.SOPRANO(), Clef.MEZZO(), Clef.BARITONE()};
-    final Mode[] MODES = new Mode[]{Mode.PRACTICE, Mode.CHALLENGE};
+    final Mode[] MODES = new Mode[]{Mode.CHALLENGE, Mode.PRACTICE};
 
     final String[] NOTES = new String[]{"A", "B", "C", "D", "E", "F", "G", "A"};
     TextSprite[] letterSprites;
@@ -174,8 +174,9 @@ public class PlayState extends AbstractState implements InputProcessor {
          * Add notes
          */
 
-        // Add extra note for "slow"
+        // Add 2 extra notes for "slow"
         if (speedIndex <= 0) {
+            addNote(WIDTH - 3*BEAT_WIDTH);
             addNote(WIDTH - 2*BEAT_WIDTH);
         }
         // Add extra note for "slow" or "medium"
@@ -199,6 +200,7 @@ public class PlayState extends AbstractState implements InputProcessor {
         // Lines
         shape.begin(ShapeRenderer.ShapeType.Line);
         shape.setColor(Color.BLACK);
+        Gdx.gl.glLineWidth(1);
 
         for (int i = 0; i < 5; i++) {
             // i+2 because STAFF_Y is the bottom BELOW the ledger line.
@@ -206,7 +208,6 @@ public class PlayState extends AbstractState implements InputProcessor {
             shape.line(0, y, WIDTH, y);
         }
         shape.end();
-
 
         // Draw keyboard
 

@@ -21,7 +21,7 @@ public class MenuState extends AbstractState implements InputProcessor {
     SpriteBatch batch;
 
     TextSprite[] modeSprites, clefSprites, speedSprites;
-    final String[] MODES = new String[] {"practice", "100note"};
+    final String[] MODES = new String[] {"100note", "practice"};
     final String[] CLEFS = new String[] {"treble", "bass", "alto", "tenor", "soprano", "mezzo", "baritone"};
     String[] CLEF_TEXTS, CLEF_IMAGES;
     final String[] SPEEDS = new String[] {"slow", "medium", "fast", "insane"};

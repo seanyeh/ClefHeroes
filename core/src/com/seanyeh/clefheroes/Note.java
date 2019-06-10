@@ -11,6 +11,8 @@ public class Note extends AbstractSprite {
 
 //    public int x, y;
 
+    private static int lastGeneratedColor;
+    private int randomColor;
 
     private int midi, noteIndex, ledger;
     private Status noteStatus, answerStatus;
@@ -19,8 +21,19 @@ public class Note extends AbstractSprite {
 
     private boolean isMoving;
 
+    private NoteRingSprite ring;
+    private float ringGradient;
+
+    private static int generateColor() {
+        return (lastGeneratedColor = MathUtils.random(1, 6));
+    }
+
     public Note(PlayState g, int index) {
-        super("blob" + MathUtils.random(1, 6), g.WIDTH, g.STAFF_Y + index*(g.NOTE_HEIGHT/2), g.NOTE_WIDTH, g.NOTE_HEIGHT);
+        super("blob" + Note.generateColor(),
+                g.WIDTH, g.STAFF_Y + index*(g.NOTE_HEIGHT/2), g.NOTE_WIDTH, g.NOTE_HEIGHT);
+
+        // hacky way to store the randomly generated color
+        randomColor = lastGeneratedColor;
 
         game = g;
         noteIndex = index;
@@ -44,6 +57,8 @@ public class Note extends AbstractSprite {
 
 
         midi = 60;
+
+        ring = new NoteRingSprite(this);
     }
 
     public int getLedger() {
@@ -156,9 +171,29 @@ public class Note extends AbstractSprite {
             isFinished = true;
         }
 
-
-
+        // Draw note ring if within
+        setRingGradient(Math.abs(dist), 4 * x);
+        ring.render(batch);
     }
+
+    public int getColor() { return randomColor; }
+
+    /*
+     * Return a float from 0 to 1, where:
+     *  when x = limit, result = 0
+     *  when x = 0,     result = 1
+     */
+    public void setRingGradient(double x, double limit) {
+        if (x >= limit) {
+            ringGradient = 0;
+            return;
+        }
+
+        double value = limit - x;
+        ringGradient = (float)(value/limit);
+    }
+
+    public float getRingGradient() { return ringGradient; }
 
     public void gotoPipe() {
         isMoving = false;
